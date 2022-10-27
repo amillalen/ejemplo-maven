@@ -2,10 +2,20 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Compile') {
             steps {
-                echo 'Building...'
+                echo 'Compiling...'
+                sh "./mvnw.cmd clean compile -e"
             }
         }
-    }
+        stage('Test') {
+                echo 'Testing...'
+                sh "./mvnw.cmd clean test -e"            
+        }
+        stage('Package') {
+                echo 'Packaging...'
+                sh "./mvnw.cmd clean package -e"            
+        }        
+        
+    }    
 }
