@@ -9,12 +9,16 @@ pipeline {
             }
         }
         stage('Test') {
+            steps {
                 echo 'Testing...'
                 sh "./mvnw.cmd clean test -e"            
+            }
         }
         stage('Package') {
+            steps {
                 echo 'Packaging...'
                 sh "./mvnw.cmd clean package -e"            
+            }
         }        
         
     }    
