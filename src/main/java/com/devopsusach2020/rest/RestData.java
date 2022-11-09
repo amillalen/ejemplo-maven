@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 @RequestMapping(path = "/rest/mscovid")
 public class RestData {
 	
-	private final static Logger LOGGER = Logger.getLogger("devops.subnivel.Control");
+	private static final Logger LOGGER = Logger.getLogger("devops.subnivel.Control");
 
 	
 	@GetMapping(path = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -35,7 +35,7 @@ public class RestData {
 	
 	
 	@GetMapping(path = "/estadoPais", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Pais getTotalPais(@RequestParam(name = "pais") String message){
+	public ResponseEntity<Pais> getTotalPais(@RequestParam(name = "pais") String message){
 		RestTemplate restTemplate = new RestTemplate();
 	    ResponseEntity<String> call= restTemplate.getForEntity("https://api.covid19api.com/live/country/" + message ,String.class);
 	    
@@ -46,7 +46,11 @@ public class RestData {
 		int death = 0;
 		int recovered = 0;
 		Gson gson = new Gson();
-        Pais[] estados = gson.fromJson(call.getBody().toLowerCase(), Pais[].class);
+		String responseBody = call.getBody();
+		if (responseBody==null) {
+			return ResponseEntity.notFound().build();
+		}
+        Pais[] estados = gson.fromJson(responseBody.toLowerCase(), Pais[].class);
 
         for(Pais estado : estados) {
         	response.setDate(estado.getDate());
@@ -62,12 +66,12 @@ public class RestData {
     	response.setCountry(message);
     	response.setMensaje("ok");
 
-		return response;		
+		return ResponseEntity.ok(response);
 	}
 	
 
 	@GetMapping(path = "/estadoMundial", produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Mundial getTotalMundial(){
+	public ResponseEntity<Mundial> getTotalMundial(){
 		
 		LOGGER.log(Level.INFO, "Consulta mundial");
 		
@@ -75,11 +79,16 @@ public class RestData {
 	    ResponseEntity<String> call= restTemplate.getForEntity("https://api.covid19api.com/world/total" ,String.class);
 	    Mundial response = new Mundial();
 		Gson gson = new Gson();
-        Mundial estado = gson.fromJson(call.getBody().toLowerCase(), Mundial.class);
+		String responseBody = call.getBody();
+		if (responseBody==null) {
+			return ResponseEntity.notFound().build();
+		}
+
+        Mundial estado = gson.fromJson(responseBody.toLowerCase(), Mundial.class);
         response.setTotalConfirmed(estado.getTotalConfirmed());
         response.setTotalDeaths(estado.getTotalDeaths());
         response.setTotalRecovered(estado.getTotalRecovered());
 
-		return response;		
+		return ResponseEntity.ok(response);
 	}
 }
