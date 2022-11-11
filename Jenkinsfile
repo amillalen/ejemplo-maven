@@ -23,10 +23,11 @@ pipeline {
         stage('sonar') {
            steps{
               withSonarQubeEnv('local-sonar') { 
-                withMaven(maven:'maven 3.8.6')
+                withMaven(maven:'maven 3.8.6') {
                 sh 'mvn sonar:sonar'
               }
-           }
+             }
+          }
         }        
         
     }    
