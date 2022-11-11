@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven '3.8.1'
+    }
 
     stages {
         stage('Compile') {
@@ -23,9 +26,7 @@ pipeline {
         stage('sonar') {
            steps{
               withSonarQubeEnv('local-sonar') { 
-                withMaven(maven:'maven 3.8.6') {
                 sh 'mvn sonar:sonar'
-              }
              }
           }
         }        
