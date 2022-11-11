@@ -23,7 +23,8 @@ pipeline {
         stage('sonar') {
            steps{
               withSonarQubeEnv('local-sonar') { 
-                sh '/mvnw org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                withMaven(maven:'maven 3.8.6')
+                sh 'mvn sonar:sonar'
               }
            }
         }        
