@@ -45,6 +45,12 @@ pipeline {
                ]
              )
            }
+        }
+        stage('download from nexus'){
+          steps{
+               echo "download from nexus ..."
+               sh "curl -X GET ${NEXUS_AUTH} http://nexus:8081/repository/devops-usach-nexus/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar"
+            }
         }       
         
     }    
