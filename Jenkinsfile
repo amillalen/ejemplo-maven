@@ -34,7 +34,7 @@ pipeline {
            steps{
             step(
              [$class: 'NexusPublisherBuildStep',
-                 nexusInstanceId: 'Nexus',
+                 nexusInstanceId: 'nexus01',
                  nexusRepositoryId: 'devops-usach-nexus',
                  packages: [[$class: 'MavenPackage',
                        mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1'],
