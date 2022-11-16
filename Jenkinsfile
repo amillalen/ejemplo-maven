@@ -33,8 +33,8 @@ pipeline {
         stage('uploadNexus') {
            steps{
              NexusPublisherBuildStep(
-                 nexusInstanceId: '',
-                 nexusRepositoryId: '',
+                 nexusInstanceId: 'Nexus',
+                 nexusRepositoryId: 'devops-usach-nexus',
                  packages: [
                    [ MavenPackage(
                        mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1'],
