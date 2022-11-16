@@ -3,7 +3,9 @@ pipeline {
     tools {
         maven '3.8.6'
     }
-
+    environment {
+         WORKSPACE=/var/jenkins_home/workspace/ltibranch-pipeline_feature-nexus
+    }
     stages {
         stage('Compile') {
             steps {
