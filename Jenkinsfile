@@ -29,7 +29,24 @@ pipeline {
                 sh 'mvn sonar:sonar'
              }
           }
-        }        
+        } 
+        stage('uploadNexus') {
+           steps{
+             NexusPublisherBuildStep(
+                 nexusInstanceId: '',
+                 nexusRepositoryId: '',
+                 packages: [
+                   [ MavenPackage(
+                       mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '0.0.1'],
+                       mavenAssetList [
+                          [classifier: '', extension: 'jar', filePath: '${WORKSPACE}/build/DevOpsUsach2020-0.0.1.jar']
+                       ] 
+                     )
+                   ]
+                 ]
+             )
+           }
+        }       
         
     }    
 }
