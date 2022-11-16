@@ -40,7 +40,6 @@ pipeline {
                        mavenAssetList: [
                           [classifier: '', extension: 'jar', filePath: '${WORKSPACE}/build/DevOpsUsach2020-0.0.1.jar']
                        ] 
-                     )
                    ]
                  ]
              )
