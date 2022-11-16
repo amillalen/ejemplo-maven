@@ -32,7 +32,7 @@ pipeline {
         } 
         stage('uploadNexus') {
            steps{
-             NexusPublisherBuildStep(
+             nexusPublisherBuildStep(
                  nexusInstanceId: 'Nexus',
                  nexusRepositoryId: 'devops-usach-nexus',
                  packages: [[$class: 'MavenPackage',
