@@ -32,6 +32,7 @@ pipeline {
         } 
         stage('uploadNexus') {
            steps{
+            step(
              [$class: 'NexusPublisherBuildStep',
                  nexusInstanceId: 'Nexus',
                  nexusRepositoryId: 'devops-usach-nexus',
@@ -42,7 +43,8 @@ pipeline {
                        ] 
                    ]
                  ]
-             ]
+               ]
+             )
            }
         }       
         
