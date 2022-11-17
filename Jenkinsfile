@@ -29,7 +29,7 @@ pipeline {
              }
           }
         } 
-        stage('uploadNexus') {
+        stage('uploadNexus v0.0.1') {
            steps{
             step(
              [$class: 'NexusPublisherBuildStep',
@@ -53,5 +53,23 @@ pipeline {
             }
         }       
         
+        stage('uploadNexus v1.0.0') {
+           steps{
+            step(
+             [$class: 'NexusPublisherBuildStep',
+                 nexusInstanceId: 'nexus01',
+                 nexusRepositoryId: 'devops-usach-nexus',
+                 packages: [[$class: 'MavenPackage',
+                       mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '1.0.0'],
+                       mavenAssetList: [
+                          [classifier: '', extension: 'jar', filePath: "${WORKSPACE}/build/DevOpsUsach2020-1.0.0.jar"]
+                       ]
+                   ]
+                 ]
+               ]
+             )
+           }
+        }
+
     }    
 }
